@@ -9,6 +9,16 @@ class Screen3 extends StatefulWidget {
 class _Screen3State extends State<Screen3> {
   bool _rememberMe = false;
   bool _passwordVisible = false;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  bool _isEmailValid(String email) {
+    return email.contains('@gmail.com');
+  }
+
+  bool _isPasswordValid(String password) {
+    return password.isNotEmpty;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +92,10 @@ class _Screen3State extends State<Screen3> {
                             child: SizedBox(
                               width: ResponsiveHelper.isMobile(context) ? 200 : 300, // Adjust width based on screen size
                               child: TextField(
+                                controller: _emailController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   labelText: 'Email address/ Phone No.',
                                   prefixIcon: Icon(Icons.email), // Add email icon
@@ -97,6 +111,10 @@ class _Screen3State extends State<Screen3> {
                             child: SizedBox(
                               width: ResponsiveHelper.isMobile(context) ? 200 : 300, // Adjust width based on screen size
                               child: TextField(
+                                controller: _passwordController,
+                                onChanged: (value) {
+                                  setState(() {});
+                                },
                                 decoration: InputDecoration(
                                   labelText: 'Password',
                                   prefixIcon: Icon(Icons.lock), // Add lock icon
@@ -139,12 +157,14 @@ class _Screen3State extends State<Screen3> {
                             child: SizedBox(
                               width: 200,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/doctor_screen/doctor_screen1.dart');
-                                },
+                                onPressed: _isEmailValid(_emailController.text) && _isPasswordValid(_passwordController.text)
+                                    ? () {
+                                        Navigator.pushNamed(context, '/doctor_screen/doctor_screen1.dart');
+                                      }
+                                    : null,
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
-                                  backgroundColor:Color(0xFF13235A),
+                                  backgroundColor: Color(0xFF13235A),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -158,12 +178,14 @@ class _Screen3State extends State<Screen3> {
                             child: SizedBox(
                               width: 200,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/patient_screens/patient_screen1.dart');
-                                },
+                                onPressed: _isEmailValid(_emailController.text) && _isPasswordValid(_passwordController.text)
+                                    ? () {
+                                        Navigator.pushNamed(context, '/patient_screens/patient_screen1.dart');
+                                      }
+                                    : null,
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
-                                  backgroundColor:Color(0xFF13235A),
+                                  backgroundColor: Color(0xFF13235A),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),

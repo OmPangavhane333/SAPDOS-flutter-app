@@ -7,8 +7,13 @@ class Screen2 extends StatefulWidget {
 }
 
 class _Screen2State extends State<Screen2> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
+  bool _isEmailValid = false;
+  bool _arePasswordsMatching = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +88,12 @@ class _Screen2State extends State<Screen2> {
                           child: SizedBox(
                             width: ResponsiveHelper.isMobile(context) ? 200 : 300,
                             child: TextField(
+                              controller: _emailController,
+                              onChanged: (value) {
+                                setState(() {
+                                  _isEmailValid = value.contains('@gmail.com');
+                                });
+                              },
                               decoration: InputDecoration(
                                 labelText: 'Email address/ Phone No.',
                                 prefixIcon: Icon(Icons.email), // Add email icon
@@ -98,6 +109,12 @@ class _Screen2State extends State<Screen2> {
                           child: SizedBox(
                             width: ResponsiveHelper.isMobile(context) ? 200 : 300,
                             child: TextField(
+                              controller: _passwordController,
+                              onChanged: (value) {
+                                setState(() {
+                                  _arePasswordsMatching = value == _confirmPasswordController.text;
+                                });
+                              },
                               decoration: InputDecoration(
                                 labelText: 'Password',
                                 prefixIcon: Icon(Icons.lock), // Add lock icon
@@ -126,6 +143,12 @@ class _Screen2State extends State<Screen2> {
                           child: SizedBox(
                             width: ResponsiveHelper.isMobile(context) ? 200 : 300,
                             child: TextField(
+                              controller: _confirmPasswordController,
+                              onChanged: (value) {
+                                setState(() {
+                                  _arePasswordsMatching = value == _passwordController.text;
+                                });
+                              },
                               decoration: InputDecoration(
                                 labelText: 'Confirm Password',
                                 prefixIcon: Icon(Icons.lock), // Add lock icon
@@ -154,9 +177,11 @@ class _Screen2State extends State<Screen2> {
                           child: SizedBox(
                             width: 200,
                             child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/screen3');
-                              },
+                              onPressed: _isEmailValid && _arePasswordsMatching
+                                  ? () {
+                                      Navigator.pushNamed(context, '/screen3');
+                                    }
+                                  : null,
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.white,
                                 backgroundColor: Color(0xFF13235A),
