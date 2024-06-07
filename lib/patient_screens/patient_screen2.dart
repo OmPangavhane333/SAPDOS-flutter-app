@@ -51,7 +51,7 @@ class _PatientScreen2State extends State<PatientScreen2> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   CircleAvatar(
-                    backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+                    backgroundImage: NetworkImage('https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250'),
                     radius: 60,
                   ),
                   SizedBox(width: 20),
